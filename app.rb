@@ -67,14 +67,6 @@ def getLatestArticles
   $new_data
 end
 
-def clearNew
-  puts
-  puts "fio"
-  $new_data = []
-  $new_data
-end
-
-
 get '/stream' do
   stream(:keep_open) do |out|
     # out << "starting stream..."
@@ -151,13 +143,13 @@ post '/post' do
     "date" => Time.now
   }
   
-  $flag = true
+  $flag = true # open valve
   
   sleep 0.1
   article = [$hash.to_json]
   $hash = {}
   
-  $flag = false
+  $flag = false # close valve
   
   CSV.open("data.csv", "a") do |csv|
     csv << article
